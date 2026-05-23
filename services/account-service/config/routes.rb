@@ -30,7 +30,7 @@ Rails.application.routes.draw do
   namespace :internal do
     resources :accounts, only: :show
     resources :accounts, only: [] do
-      resources :ledger_entries, only: :create
+      resources :ledger_entries, only: %i[index create]
     end
   end
 

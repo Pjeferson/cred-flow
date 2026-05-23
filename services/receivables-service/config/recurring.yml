@@ -3,6 +3,10 @@ default: &default
     class: OverdueDetectionJob
     queue: default
     schedule: every day at 1am
+  reconciliation:
+    class: ReconciliationJob
+    queue: default
+    schedule: every day at 2am
 
 development:
   <<: *default
