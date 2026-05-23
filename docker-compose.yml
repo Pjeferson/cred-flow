@@ -117,6 +117,7 @@ services:
       RAILS_ENV: development
       RAILS_LOG_TO_STDOUT: "true"
       SECRET_KEY_BASE: dev_secret_key_base_account_service_changeme
+      DEVISE_JWT_SECRET_KEY: dev_jwt_secret_key_changeme_in_production
     depends_on:
       postgres-account:
         condition: service_healthy

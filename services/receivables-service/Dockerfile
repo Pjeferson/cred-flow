@@ -17,4 +17,4 @@ COPY . .
 
 EXPOSE 3000
 
-CMD ["bundle", "exec", "rails", "server", "-b", "0.0.0.0"]
+CMD ["sh", "-c", "bundle install && bundle exec rails server -b 0.0.0.0"]
