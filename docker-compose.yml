@@ -172,6 +172,8 @@ services:
       RAILS_ENV: development
       RAILS_LOG_TO_STDOUT: "true"
       SECRET_KEY_BASE: dev_secret_key_base_receivables_service_changeme
+      DEVISE_JWT_SECRET_KEY: dev_jwt_secret_key_changeme_in_production
+      INTERNAL_SERVICE_KEY: credflow-internal
     depends_on:
       postgres-receivables:
         condition: service_healthy
