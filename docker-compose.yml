@@ -118,6 +118,7 @@ services:
       RAILS_LOG_TO_STDOUT: "true"
       SECRET_KEY_BASE: dev_secret_key_base_account_service_changeme
       DEVISE_JWT_SECRET_KEY: dev_jwt_secret_key_changeme_in_production
+      INTERNAL_SERVICE_KEY: credflow-internal
     depends_on:
       postgres-account:
         condition: service_healthy
@@ -140,6 +141,8 @@ services:
       RABBITMQ_URL: amqp://credflow:credflow@rabbitmq:5672
       SPB_MOCK_URL: http://spb-mock:4001
       ACCOUNT_SERVICE_URL: http://account-service:3000
+      DEVISE_JWT_SECRET_KEY: dev_jwt_secret_key_changeme_in_production
+      INTERNAL_SERVICE_KEY: credflow-internal
       RAILS_ENV: development
       RAILS_LOG_TO_STDOUT: "true"
       SECRET_KEY_BASE: dev_secret_key_base_payment_service_changeme
