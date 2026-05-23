@@ -33,7 +33,6 @@ gem "rack-cors"
 
 # Jobs assíncronos e cron (OverdueDetectionJob, ReconciliationJob)
 gem "solid_queue"
-gem "mission_control-jobs"
 
 # Infraestrutura Rails
 gem "bootsnap", require: false

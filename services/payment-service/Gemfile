@@ -36,7 +36,6 @@ gem "rack-cors"
 
 # Jobs assíncronos e cron (ExpirePendingApprovalsJob)
 gem "solid_queue"
-gem "mission_control-jobs"
 
 # Infraestrutura Rails
 gem "bootsnap", require: false

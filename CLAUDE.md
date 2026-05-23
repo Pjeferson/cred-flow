@@ -335,7 +335,7 @@ Ver filas e routing keys em `@docs/rabbitmq.md`
 
 ### Fase 6 — payment-service: Motor de aprovação
 
-- [ ] **TASK-20**: Model `PaymentOrder` com state machine AASM (todos os estados e transições)
+- [x] **TASK-20**: Model `PaymentOrder` com state machine AASM (todos os estados e transições)
 - [ ] **TASK-21**: Model `Approval` (imutável após inserção, constraint `uq_approval_per_approver`)
 - [ ] **TASK-22**: Policy Engine — avalia `policy_rules` da conta e decide ação da order
 - [ ] **TASK-23**: Idempotência via Redis (check de `Idempotency-Key` header, TTL 24h)
