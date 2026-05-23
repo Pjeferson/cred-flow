@@ -3,7 +3,7 @@
 class CreateLedgerEntries < ActiveRecord::Migration[8.1]
   def change
     create_table :ledger_entries, id: :uuid do |t|
-      t.uuid    :account_id,       null: false, foreign_key: true
+      t.uuid    :account_id,       null: false
       t.string  :type,             null: false   # CREDIT_ANTECIPATION | CREDIT_RECEIVED | DEBIT_*
       t.string  :direction,        null: false   # CREDIT | DEBIT
       t.bigint  :amount_cents,     null: false
@@ -22,5 +22,7 @@ class CreateLedgerEntries < ActiveRecord::Migration[8.1]
               name: "idx_ledger_account_status"
     add_index :ledger_entries, %i[account_id created_at],
               name: "idx_ledger_created", order: { created_at: :desc }
+
+    add_foreign_key :ledger_entries, :accounts, column: :account_id
   end
 end
