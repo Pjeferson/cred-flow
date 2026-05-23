@@ -1,7 +1,6 @@
 # Domínio — CredFlow
 
-Contexto de negócio: o CredFlow simula a infraestrutura que uma empresa como
-a Vórtx/Grafeno provê para credores (FIDCs, securitizadoras, fintechs de crédito)
+Contexto de negócio: o CredFlow simula a infraestrutura de uma empresa que provê para credores (FIDCs, securitizadoras, fintechs de crédito)
 que precisam operar contas vinculadas, executar pagamentos com governança e
 gerenciar o ciclo de vida de recebíveis.
 

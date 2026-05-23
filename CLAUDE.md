@@ -3,7 +3,7 @@
 Plataforma de infraestrutura para operações de crédito: conta vinculada (escrow),
 motor de aprovação com dupla alçada e gestão de recebíveis (CCB + parcelas).
 Projeto de portfólio desenvolvido para demonstrar conceitos de mercado de capitais
-e infraestrutura financeira (contexto: Vórtx/Grafeno).
+e infraestrutura financeira.
 
 ---
 
