@@ -27,5 +27,12 @@ Rails.application.routes.draw do
     end
   end
 
+  namespace :internal do
+    resources :accounts, only: :show
+    resources :accounts, only: [] do
+      resources :ledger_entries, only: :create
+    end
+  end
+
   get "up" => "rails/health#show", as: :rails_health_check
 end
