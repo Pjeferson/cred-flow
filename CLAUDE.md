@@ -301,7 +301,7 @@ Ver filas e routing keys em `@docs/rabbitmq.md`
 
 ### Fase 1 — Infraestrutura base
 
-- [ ] **TASK-01**: Criar estrutura de diretórios do monorepo (`services/`, `mocks/`, `frontend/`, `api-gateway/`)
+- [x] **TASK-01**: Criar estrutura de diretórios do monorepo (`services/`, `mocks/`, `frontend/`, `api-gateway/`)
 - [ ] **TASK-02**: Gerar `docker-compose.yml` com todos os serviços (3 Rails + 3 Postgres + Redis + RabbitMQ + frontend + Nginx + 3 mocks + Mailhog)
 - [ ] **TASK-03**: Inicializar account-service Rails 8 API-only com PostgreSQL
 - [ ] **TASK-04**: Inicializar payment-service Rails 8 API-only com PostgreSQL
