@@ -95,6 +95,8 @@ services:
       context: mocks/spb-mock
     ports:
       - "4001:4001"
+    volumes:
+      - spb_data:/app/db
 
   boleto-mock:
     build:
@@ -219,3 +221,4 @@ volumes:
   bundle-payment:
   bundle-receivables:
   node_modules-frontend:
+  spb_data:
