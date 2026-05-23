@@ -330,8 +330,8 @@ Ver filas e routing keys em `@docs/rabbitmq.md`
 
 ### Fase 5 — RabbitMQ: setup base
 
-- [ ] **TASK-18**: Bunny + `EventPublisher` nos 3 serviços Rails (exchange `credflow.events`)
-- [ ] **TASK-19**: `ApplicationConsumer` base (Sneakers) com retry exponencial e dead-letter nos 3 serviços
+- [x] **TASK-18**: Bunny + `EventPublisher` nos 3 serviços Rails (exchange `credflow.events`)
+- [x] **TASK-19**: `ApplicationConsumer` base (Sneakers) com retry exponencial e dead-letter nos 3 serviços
 
 ### Fase 6 — payment-service: Motor de aprovação
 
