@@ -20,7 +20,7 @@ class PaymentSettledConsumer < ApplicationConsumer
       payment_order_id: payload[:paymentOrderId],
       idempotency_key:  "debit_executed:#{payload[:paymentOrderId]}",
       status:           "SETTLED",
-      description:      "Pagamento liquidado via SPB"
+      description:      "SPB:#{payload[:spbTransactionId]}"
     )
   end
 end

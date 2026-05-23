@@ -72,6 +72,7 @@ class ExecutePaymentService
     end
     response = conn.post("/settle", {
       payment_order_id: order.id,
+      account_id:       order.account_id,
       amount_cents:     order.amount_cents,
       beneficiary_doc:  order.beneficiary_doc
     }.to_json)

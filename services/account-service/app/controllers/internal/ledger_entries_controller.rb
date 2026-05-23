@@ -12,7 +12,8 @@ module Internal
       render json: entries.map { |e|
         { id: e.id, type: e.type, amount_cents: e.amount_cents,
           status: e.status, payment_order_id: e.payment_order_id,
-          idempotency_key: e.idempotency_key, created_at: e.created_at.iso8601 }
+          idempotency_key: e.idempotency_key, description: e.description,
+          created_at: e.created_at.iso8601 }
       }
     end
 

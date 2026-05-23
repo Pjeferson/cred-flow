@@ -38,20 +38,22 @@ class ReconciliationJob < ApplicationJob
     Rails.logger.error("[ReconciliationJob] account #{account_id}: #{e.message}")
   end
 
-  # Compara pelo payment_order_id como chave de correlação.
-  # Divergência = entrada no ledger sem correspondência no SPB ou com valor diferente.
+  # Correlaciona pelo spb_transaction_id gravado na description do lançamento
+  # no formato "SPB:<spb_transaction_id>".
+  # Divergência = sem correspondência no SPB ou valor diferente.
   def compare(ledger_entries, spb_transactions)
-    spb_index = spb_transactions.index_by { |t| t[:spb_transaction_id] }
+    spb_index = spb_transactions.index_by { |t| t[:spb_transaction_id].to_s }
 
     divergences = []
 
     ledger_entries.each do |entry|
-      spb_tx = spb_index[entry[:payment_order_id]]
+      spb_id = entry[:description].to_s.sub(/\ASPB:/, "")
+      spb_tx = spb_index[spb_id]
 
       if spb_tx.nil?
         divergences << { entry: entry, spb_tx: nil,
                          ledger_amount: entry[:amount_cents], spb_amount: 0 }
-      elsif spb_tx[:amount_cents] != entry[:amount_cents]
+      elsif spb_tx[:amount_cents].to_i != entry[:amount_cents].to_i
         divergences << { entry: entry, spb_tx: spb_tx,
                          ledger_amount: entry[:amount_cents], spb_amount: spb_tx[:amount_cents] }
       end
