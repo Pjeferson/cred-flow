@@ -359,8 +359,8 @@ Ver filas e routing keys em `@docs/rabbitmq.md`
 
 ### Fase 8 — Notificações
 
-- [ ] **TASK-38**: Consumer `approval.requested` → email via Mailhog (lista aprovadores + link)
-- [ ] **TASK-39**: Consumer `payment.failed` → email de notificação ao cedente
+- [x] **TASK-38**: Consumer `approval.requested` → email via Mailhog (lista aprovadores + link)
+- [x] **TASK-39**: Consumer `payment.failed` → email de notificação ao cedente
 
 ### Fase 9 — Frontend
 
