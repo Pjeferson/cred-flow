@@ -16,7 +16,9 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      # Rotas de domínio serão adicionadas aqui nas próximas tasks
+      resources :participants, only: %i[index show create] do
+        post :kyc_check, on: :member
+      end
     end
   end
 

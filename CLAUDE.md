@@ -318,9 +318,9 @@ Ver filas e routing keys em `@docs/rabbitmq.md`
 
 ### Fase 3 — account-service: Participantes e KYC
 
-- [ ] **TASK-12**: Model `Participant` (cedente, credor, sacado) com `kyc_status`
-- [ ] **TASK-13**: kyc-mock Sinatra (valida CPF/CNPJ, responde `approved`/`rejected`)
-- [ ] **TASK-14**: CRUD de participantes (`/api/v1/participants`) + endpoint de KYC check
+- [x] **TASK-12**: Model `Participant` (cedente, credor, sacado) com `kyc_status`
+- [x] **TASK-13**: kyc-mock Sinatra (valida CPF/CNPJ, responde `approved`/`rejected`)
+- [x] **TASK-14**: CRUD de participantes (`/api/v1/participants`) + endpoint de KYC check
 
 ### Fase 4 — account-service: Contas e Ledger
 
