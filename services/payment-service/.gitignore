@@ -1,0 +1,33 @@
+# Gems e bundle
+/.bundle
+/vendor/bundle
+
+# Logs e temporários
+/log/*
+/tmp/*
+!/log/.keep
+!/tmp/.keep
+!/tmp/pids
+!/tmp/pids/.keep
+
+# Credenciais e chaves (NUNCA commitar)
+/config/master.key
+/config/credentials/*.key
+
+# Storage local
+/storage/*
+!/storage/.keep
+/tmp/storage/*
+!/tmp/storage/.keep
+
+# Banco de dados
+/db/*.sqlite3
+/db/*.sqlite3-journal
+
+# Arquivos de sistema
+.DS_Store
+*.swp
+*.swo
+
+# RSpec
+/coverage

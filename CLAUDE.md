@@ -303,10 +303,10 @@ Ver filas e routing keys em `@docs/rabbitmq.md`
 
 - [x] **TASK-01**: Criar estrutura de diretórios do monorepo (`services/`, `mocks/`, `frontend/`, `api-gateway/`)
 - [x] **TASK-02**: Gerar `docker-compose.yml` com todos os serviços (3 Rails + 3 Postgres + Redis + RabbitMQ + frontend + Nginx + 3 mocks + Mailhog)
-- [ ] **TASK-03**: Inicializar account-service Rails 8 API-only com PostgreSQL
-- [ ] **TASK-04**: Inicializar payment-service Rails 8 API-only com PostgreSQL
-- [ ] **TASK-05**: Inicializar receivables-service Rails 8 API-only com PostgreSQL
-- [ ] **TASK-06**: Configurar api-gateway Nginx (proxy reverso por prefixo de rota)
+- [x] **TASK-03**: Inicializar account-service Rails 8 API-only com PostgreSQL
+- [x] **TASK-04**: Inicializar payment-service Rails 8 API-only com PostgreSQL
+- [x] **TASK-05**: Inicializar receivables-service Rails 8 API-only com PostgreSQL
+- [x] **TASK-06**: Configurar api-gateway Nginx (proxy reverso por prefixo de rota)
 - [ ] **TASK-07**: Inicializar frontend React 19 + Vite 6 + TypeScript + TanStack Router/Query + shadcn/ui
 - [ ] **TASK-08**: Configurar CORS nos três serviços Rails
 
