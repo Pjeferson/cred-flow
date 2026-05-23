@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_05_23_300002) do
+ActiveRecord::Schema[8.1].define(version: 2026_05_23_300003) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -46,6 +46,20 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_23_300002) do
     t.index ["ccb_id"], name: "index_installments_on_ccb_id"
     t.index ["due_date"], name: "idx_installments_due", where: "((status)::text = ANY (ARRAY[('pending'::character varying)::text, ('partially_paid'::character varying)::text]))"
     t.check_constraint "status::text = ANY (ARRAY['pending'::character varying::text, 'partially_paid'::character varying::text, 'paid'::character varying::text, 'overdue'::character varying::text])", name: "chk_installments_status"
+  end
+
+  create_table "reconciliation_runs", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "account_id", null: false
+    t.integer "divergences_found", default: 0, null: false
+    t.integer "entries_checked", default: 0, null: false
+    t.text "error_message"
+    t.datetime "finished_at"
+    t.datetime "ran_at", default: -> { "now()" }, null: false
+    t.date "reference_date", null: false
+    t.string "status", default: "running", null: false
+    t.index ["account_id", "reference_date"], name: "idx_reconciliation_account", order: { reference_date: :desc }
+    t.index ["account_id", "reference_date"], name: "uq_reconciliation_date", unique: true
+    t.check_constraint "status::text = ANY (ARRAY['running'::character varying, 'completed'::character varying, 'failed'::character varying]::text[])", name: "chk_reconciliation_runs_status"
   end
 
   add_foreign_key "installments", "ccbs"

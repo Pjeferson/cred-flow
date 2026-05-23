@@ -349,8 +349,8 @@ Ver filas e routing keys em `@docs/rabbitmq.md`
 ### Fase 7 — receivables-service
 
 - [x] **TASK-30**: Model `Ccb` + `InstallmentScheduler` (gera parcelas em batch na mesma transação)
-- [ ] **TASK-31**: Model `Installment` com index parcial em `(due_date) WHERE status IN ('pending', 'partially_paid')`
-- [ ] **TASK-32**: Model `ReconciliationRun`
+- [x] **TASK-31**: Model `Installment` com index parcial em `(due_date) WHERE status IN ('pending', 'partially_paid')`
+- [x] **TASK-32**: Model `ReconciliationRun`
 - [ ] **TASK-33**: boleto-mock Sinatra (gera linha digitável válida)
 - [ ] **TASK-34**: Endpoints CCB: emitir, listar, detalhe + cronograma de installments
 - [ ] **TASK-35**: Consumer `payment.settled` → reconcilia parcelas (atualiza `paid_cents` e status)
