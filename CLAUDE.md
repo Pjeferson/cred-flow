@@ -343,8 +343,8 @@ Ver filas e routing keys em `@docs/rabbitmq.md`
 - [x] **TASK-25**: Endpoint criação de `PaymentOrder` + policy check automático
 - [x] **TASK-26**: Endpoint de aprovação (`POST /api/v1/payment_orders/:id/approvals`) com quorum N de M
 - [x] **TASK-27**: Job `ExpirePendingApprovalsJob` (Solid Queue, a cada 5min — marca EXPIRED e compensa)
-- [ ] **TASK-28**: Consumer `payment.settled` → account-service cria `DEBIT_EXECUTED`
-- [ ] **TASK-29**: Consumer `payment.failed` → account-service cria `DEBIT_REVERSED` via `reservedEntryId`
+- [x] **TASK-28**: Consumer `payment.settled` → account-service cria `DEBIT_EXECUTED`
+- [x] **TASK-29**: Consumer `payment.failed` → account-service cria `DEBIT_REVERSED` via `reservedEntryId`
 
 ### Fase 7 — receivables-service
 
