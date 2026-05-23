@@ -314,7 +314,7 @@ Ver filas e routing keys em `@docs/rabbitmq.md`
 
 - [x] **TASK-09**: Instalar e configurar Devise + devise-jwt no account-service (User + JwtDenylist)
 - [x] **TASK-10**: Endpoints de auth: `POST /api/v1/auth/sign_up`, `POST /api/v1/auth/sign_in`, `DELETE /api/v1/auth/sign_out`
-- [ ] **TASK-11**: Fluxo de auth no frontend (login, registro, logout, persistência de JWT)
+- [x] **TASK-11**: Fluxo de auth no frontend (login, registro, logout, persistência de JWT)
 
 ### Fase 3 — account-service: Participantes e KYC
 
