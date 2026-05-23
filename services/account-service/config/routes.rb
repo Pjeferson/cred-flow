@@ -19,6 +19,11 @@ Rails.application.routes.draw do
       resources :participants, only: %i[index show create] do
         post :kyc_check, on: :member
       end
+
+      resources :accounts, only: %i[index show create] do
+        get  :balance,        on: :member
+        resources :ledger_entries, only: :index
+      end
     end
   end
 

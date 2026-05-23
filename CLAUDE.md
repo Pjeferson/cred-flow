@@ -324,9 +324,9 @@ Ver filas e routing keys em `@docs/rabbitmq.md`
 
 ### Fase 4 — account-service: Contas e Ledger
 
-- [ ] **TASK-15**: Model `Account` (conta vinculada) com `policy_rules` JSONB + validações
-- [ ] **TASK-16**: Model `LedgerEntry` (append-only) + `BalanceCalculator` (query de saldo e saldo disponível)
-- [ ] **TASK-17**: Endpoints de conta: criar, listar, saldo (`GET /api/v1/accounts/:id/balance`), extrato
+- [x] **TASK-15**: Model `Account` (conta vinculada) com `policy_rules` JSONB + validações
+- [x] **TASK-16**: Model `LedgerEntry` (append-only) + `BalanceCalculator` (query de saldo e saldo disponível)
+- [x] **TASK-17**: Endpoints de conta: criar, listar, saldo (`GET /api/v1/accounts/:id/balance`), extrato
 
 ### Fase 5 — RabbitMQ: setup base
 
