@@ -354,7 +354,7 @@ Ver filas e routing keys em `@docs/rabbitmq.md`
 - [x] **TASK-33**: boleto-mock Sinatra (gera linha digitável válida)
 - [x] **TASK-34**: Endpoints CCB: emitir, listar, detalhe + cronograma de installments
 - [x] **TASK-35**: Consumer `payment.settled` → reconcilia parcelas (atualiza `paid_cents` e status)
-- [ ] **TASK-36**: Job `OverdueDetectionJob` (Solid Queue, cron 01:00 diário — marca OVERDUE)
+- [x] **TASK-36**: Job `OverdueDetectionJob` (Solid Queue, cron 01:00 diário — marca OVERDUE)
 - [ ] **TASK-37**: Job `ReconciliationJob` (Solid Queue, cron 02:00 diário — compara ledger com extrato SPB)
 
 ### Fase 8 — Notificações
