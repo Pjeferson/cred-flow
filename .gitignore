@@ -1,0 +1,2 @@
+# PIDs gerados pelos containers Rails em runtime
+services/*/tmp/pids/server.pid
