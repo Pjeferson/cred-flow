@@ -23,10 +23,11 @@ export function RegisterPage() {
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
               Nome
             </label>
             <input
+              id="name"
               type="text"
               required
               value={name}
@@ -36,10 +37,11 @@ export function RegisterPage() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
               Email
             </label>
             <input
+              id="email"
               type="email"
               required
               value={email}
@@ -49,10 +51,11 @@ export function RegisterPage() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
               Senha
             </label>
             <input
+              id="password"
               type="password"
               required
               minLength={8}
@@ -64,7 +67,7 @@ export function RegisterPage() {
 
           {signUp.error && (
             <p className="text-sm text-red-600">
-              Erro ao cadastrar. Verifique os dados.
+              Não foi possível criar a conta. Verifique os dados.
             </p>
           )}
 
@@ -73,7 +76,7 @@ export function RegisterPage() {
             disabled={signUp.isPending}
             className="w-full bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white font-medium rounded-lg py-2 text-sm transition-colors"
           >
-            {signUp.isPending ? "Cadastrando..." : "Cadastrar"}
+            {signUp.isPending ? "Criando conta..." : "Criar conta"}
           </button>
         </form>
 

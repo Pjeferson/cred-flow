@@ -1,10 +1,14 @@
 import "@testing-library/jest-dom/vitest";
 import { afterAll, afterEach, beforeAll, vi } from "vitest";
+import { cleanup } from "@testing-library/react";
 import { server } from "./server";
 
 // MSW — intercepta HTTP em todos os testes
 beforeAll(() => server.listen({ onUnhandledRequest: "error" }));
-afterEach(() => server.resetHandlers());
+afterEach(() => {
+  cleanup();
+  server.resetHandlers();
+});
 afterAll(() => server.close());
 
 // Mock TanStack Router — substitui hooks de navegação por spies
