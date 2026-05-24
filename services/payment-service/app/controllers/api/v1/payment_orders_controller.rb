@@ -15,7 +15,9 @@ module Api
       end
 
       def show
-        render json: PaymentOrderSerializer.new(payment_order).serializable_hash
+        order = payment_order
+        return if performed?
+        render json: PaymentOrderSerializer.new(order).serializable_hash
       end
 
       def create

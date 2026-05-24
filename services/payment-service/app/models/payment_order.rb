@@ -8,6 +8,8 @@ class PaymentOrder < ApplicationRecord
     approved executing settled rejected failed expired
   ].freeze
 
+  has_many :approvals, dependent: :destroy
+
   validates :account_id,      presence: true
   validates :requested_by,    presence: true
   validates :amount_cents,    presence: true, numericality: { greater_than: 0, only_integer: true }
@@ -40,7 +42,7 @@ class PaymentOrder < ApplicationRecord
     end
 
     event :approve do
-      transitions from: :pending_approval, to: :approved
+      transitions from: %i[pending_approval policy_check], to: :approved
     end
 
     event :reject do
