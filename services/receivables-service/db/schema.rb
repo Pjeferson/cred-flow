@@ -28,7 +28,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_23_300004) do
     t.index ["account_id", "status"], name: "idx_ccbs_account"
     t.check_constraint "installment_count > 0", name: "chk_ccbs_installment_count"
     t.check_constraint "principal_cents > 0", name: "chk_ccbs_principal_positive"
-    t.check_constraint "status::text = ANY (ARRAY['active'::character varying::text, 'settled'::character varying::text, 'defaulted'::character varying::text, 'cancelled'::character varying::text])", name: "chk_ccbs_status"
+    t.check_constraint "status::text = ANY (ARRAY['active'::character varying, 'settled'::character varying, 'defaulted'::character varying, 'cancelled'::character varying]::text[])", name: "chk_ccbs_status"
   end
 
   create_table "installments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -44,8 +44,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_23_300004) do
     t.index ["ccb_id", "number"], name: "uq_installment_number", unique: true
     t.index ["ccb_id", "status"], name: "idx_installments_ccb"
     t.index ["ccb_id"], name: "index_installments_on_ccb_id"
-    t.index ["due_date"], name: "idx_installments_due", where: "((status)::text = ANY (ARRAY[('pending'::character varying)::text, ('partially_paid'::character varying)::text]))"
-    t.check_constraint "status::text = ANY (ARRAY['pending'::character varying::text, 'partially_paid'::character varying::text, 'paid'::character varying::text, 'overdue'::character varying::text])", name: "chk_installments_status"
+    t.index ["due_date"], name: "idx_installments_due", where: "((status)::text = ANY ((ARRAY['pending'::character varying, 'partially_paid'::character varying])::text[]))"
+    t.check_constraint "status::text = ANY (ARRAY['pending'::character varying, 'partially_paid'::character varying, 'paid'::character varying, 'overdue'::character varying]::text[])", name: "chk_installments_status"
   end
 
   create_table "reconciliation_runs", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

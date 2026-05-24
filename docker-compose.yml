@@ -109,6 +109,7 @@ services:
   account-service:
     build:
       context: services/account-service
+    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails server -b 0.0.0.0"
     ports:
       - "3001:3000"
     environment:
@@ -135,6 +136,7 @@ services:
   payment-service:
     build:
       context: services/payment-service
+    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails server -b 0.0.0.0"
     ports:
       - "3002:3000"
     environment:
@@ -162,6 +164,7 @@ services:
   receivables-service:
     build:
       context: services/receivables-service
+    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails server -b 0.0.0.0"
     ports:
       - "3003:3000"
     environment:
