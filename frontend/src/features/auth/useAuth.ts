@@ -20,7 +20,7 @@ export function useAuth() {
 
   const signIn = useMutation({
     mutationFn: async (data: { email: string; password: string }) => {
-      const response = await api.post("api/v1/auth/sign_in", { json: data });
+      const response = await api.post("api/v1/auth/sign_in", { json: { user: data } });
       const token = response.headers.get("Authorization")?.replace("Bearer ", "");
       const body: AuthResponse = await response.json();
       return { token, user: body.user };
