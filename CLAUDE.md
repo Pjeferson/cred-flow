@@ -214,6 +214,15 @@ docker compose run --rm account-service bundle exec rails runner \
 - `npm run test:e2e` → apenas Playwright (E2E). Exige stack completo no ar (`docker compose up -d`).
 - Os dois nunca rodam juntos. Marcar uma task de testes como concluída exige rodar **ambos**.
 
+**`AccountServiceClient` — chaves símbolo:**
+- `AccountServiceClient#fetch_account` usa `JSON.parse(..., symbolize_names: true)`, então o hash retornado tem chaves símbolo (`:policy_rules`, `:approval_threshold`, etc.).
+- Qualquer serviço que leia esse resultado deve usar notação símbolo: `policy_rules.dig(:approval_threshold)`, nunca `policy_rules.dig("approval_threshold")`.
+- Usar chave string retorna `nil` silenciosamente — sem erro em runtime, mas com comportamento errado (ex.: quorum de aprovação ignorado).
+
+**`api.ts` (frontend) — hook de 401:**
+- O hook `afterResponse` redireciona para `/login` em qualquer 401, mas endpoints de autenticação (`/auth/sign_in`, `/auth/sign_up`) também retornam 401 em caso de credenciais inválidas.
+- Aplicar o redirect apenas quando `!request.url.includes("/auth/")` — caso contrário erros de login causam reload da página e a mensagem de erro nunca é exibida.
+
 **Playwright — armadilhas conhecidas:**
 - Os arquivos de teste têm extensão `.e2e.ts`, não `.spec.ts`. O `playwright.config.ts` precisa de `testMatch: "**/*.e2e.ts"` — sem isso, `0 tests found` e o comando sai com sucesso silencioso.
 - A imagem Docker do Playwright (`mcr.microsoft.com/playwright:vX.Y.Z-noble`) deve ter a mesma versão `X.Y.Z` que o pacote `@playwright/test` no `package.json`. Versões diferentes causam erro de browser não encontrado.
