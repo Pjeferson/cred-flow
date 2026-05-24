@@ -5,16 +5,16 @@
 
 ---
 
-## Resultado atual (último run com RAILS_ENV=test + globalSetup pendente)
+## Resultado final — 6/6 passando (TASK-54 concluída)
 
 | Teste | Status |
 |---|---|
 | Fluxo 1 — login com credenciais válidas redireciona para o dashboard | ✅ passa |
 | Fluxo 1 — rota autenticada redireciona para /login sem token | ✅ passa |
-| Fluxo 1 — credenciais inválidas exibem mensagem de erro | ⚠️ correção aplicada (BUG 2), não revalidado |
-| Fluxo 2 — cria payment order e aparece em pending | ⚠️ correção aplicada (BUG 1), não revalidado |
+| Fluxo 1 — credenciais inválidas exibem mensagem de erro | ✅ passa (BUG 2 corrigido) |
+| Fluxo 2 — cria payment order e aparece em pending | ✅ passa (BUG 1 + seletores corrigidos) |
 | Fluxo 3 — tela de aprovações exibe ordens pendentes do seed | ✅ passa |
-| Fluxo 3 — abre modal de revisão e registra aprovação | ⚠️ TASK-54 em andamento (BUG 3) |
+| Fluxo 3 — abre modal de revisão e registra aprovação | ✅ passa (BUG 3 + BUG 4 corrigidos) |
 
 ---
 
@@ -97,21 +97,29 @@ if (response.status === 401 && !request.url.includes("/auth/")) {
 ---
 
 ### BUG 3 — Modal de aprovação não fecha após Confirmar
-**Arquivo:** `frontend/src/e2e/approvals.e2e.ts:41`
+**Arquivos:** `services/payment-service/app/services/process_approval_service.rb`,
+`services/account-service/app/controllers/internal/e2e_controller.rb`
 
-**Causa raiz confirmada:** os seeds de dev criam uma aprovação pré-existente para
-`APPROVER_1_ID` em `seed-po-010`. O teste seleciona `index: 1` no `<select>`
-(primeiro credor da lista vinda de account-service), que coincide com esse approver
-já registrado → POST retorna 422 "Approver já registrou uma decisão" → modal não fecha.
+**Causa raiz real:** `ProcessApprovalService#fetch_policy_rules` retorna um hash
+com chaves símbolo (porque `AccountServiceClient` usa `symbolize_names: true`), mas
+a linha seguinte usava `.dig("approval_threshold")` com chave STRING. Isso retorna
+`nil`, forçando `required = 1`. Com quorum de 1, a primeira aprovação disparava
+`ExecutePaymentService` → erro no SPB mock → mutation lança exceção → modal fica aberto.
 
-Além disso, os seeds de dev têm `expires_at: 2h/4h` e o `ExpirePendingApprovalsJob`
-roda a cada 5min, podendo expirar as ordens antes do teste.
+**Correção aplicada:**
+```ruby
+# antes:
+threshold_cfg = (policy_rules.dig("approval_threshold") || {}).symbolize_keys
+# depois:
+threshold_cfg = policy_rules.dig(:approval_threshold) || {}
+```
 
-**Solução em andamento: TASK-54 — banco de test isolado.**
+**Seed também corrigido:** `approval_threshold: { required: 2, of: 3 }` adicionado
+ao `policy_rules` na semente E2E do account-service.
 
 ---
 
-## TASK-54 — Banco de test isolado para E2E (em andamento)
+## TASK-54 — Banco de test isolado para E2E (✅ concluída)
 
 **Objetivo:** E2E roda contra `RAILS_ENV=test` (bancos `_test`), nunca toca bancos de dev.
 O `globalSetup` do Playwright semeia dados controlados antes de cada suíte.
@@ -132,20 +140,11 @@ O `globalSetup` do Playwright semeia dados controlados antes de cada suíte.
 | `frontend/playwright.config.ts` | ✅ `globalSetup` adicionado |
 | `CLAUDE.md` | ✅ comandos E2E atualizados |
 
-### Estado atual dos endpoints
+### Resultado
 
-- `POST http://localhost:3002/internal/e2e/seed` → ✅ **200 OK** (`pending_orders: 2, approvals: 0`)
-- `POST http://localhost:3001/internal/e2e/seed` → ❌ **500** — container ainda rodando código em cache
-
-### O que falta para concluir
-
-1. **Reiniciar account-service** para carregar o novo controller:
-   ```bash
-   docker compose restart account-service
-   ```
-2. **Verificar** que `POST /internal/e2e/seed` retorna 200 em ambos os serviços
-3. **Rodar o Playwright** com o override e confirmar que `globalSetup` executa sem erro
-4. **Revalidar os 6 testes** esperando 5 ou 6 passando (BUG 1 e BUG 2 já corrigidos)
+```
+6 passed (3.7s)
+```
 
 ---
 
