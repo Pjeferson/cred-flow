@@ -10,7 +10,9 @@ module Api
       end
 
       def show
-        render json: AccountSerializer.new(account).serializable_hash
+        render json: AccountSerializer.new(
+          Account.includes(:cedente, :credor, :sacado).find(params[:id])
+        ).serializable_hash
       end
 
       def create

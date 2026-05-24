@@ -364,7 +364,7 @@ Ver filas e routing keys em `@docs/rabbitmq.md`
 
 ### Fase 9 — Frontend
 
-- [ ] **TASK-40**: Dashboard de participantes e contas vinculadas (criar, listar, ver saldo)
+- [x] **TASK-40**: Dashboard de participantes e contas vinculadas (criar, listar, ver saldo)
 - [ ] **TASK-41**: Fluxo de payment order: criar pedido + tela de aprovação (dupla alçada)
 - [ ] **TASK-42**: Dashboard de CCBs e cronograma de parcelas
 - [ ] **TASK-43**: Extrato da conta vinculada (ledger entries com paginação)
