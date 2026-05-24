@@ -377,6 +377,14 @@ Ver filas e routing keys em `@docs/rabbitmq.md`
 - [x] **TASK-47**: Request specs RSpec para receivables-service (CCBs, installments, reconciliation)
 - [x] **TASK-48**: Seeds realistas com Faker cobrindo o fluxo completo ponta a ponta
 
+### Fase 11 — Testes de Frontend
+
+- [ ] **TASK-49**: Setup do ambiente de testes frontend — `vitest.config.ts` com jsdom, arquivo `setup.ts` com mocks globais de TanStack Router, TanStack Query e `src/lib/api.ts`
+- [ ] **TASK-50**: Testes unitários de `src/lib/` — `formatters.ts` (formatCurrency, formatDate, policyReason) e `utils.ts`; sem mocks, cobertura 100% das funções exportadas
+- [ ] **TASK-51**: Testes de auth — `LoginPage` e `RegisterPage` (render, submit válido, exibição de erro), `useAuth` (signIn/signUp/signOut com mock da API), `authStore` (setUser, logout, persistência)
+- [ ] **TASK-52**: Testes dos hooks de domínio — `useParticipants`, `useAccounts`, `usePaymentOrders`, `useCcbs`, `useMonitoring`; mockar `api` e verificar queryKey, chamada correta e transformação de dados
+- [ ] **TASK-53**: Testes de componentes de domínio — `CreateTransferModal` (abrir, preencher, submeter, fechar), `ApprovalQueue` (renderiza ordens, chama approve/reject), `MonitoringPage` (métricas, alerta de overdue), `InstallmentSchedule` (tabela de parcelas, badge de status)
+
 ---
 
 ## Regras para o Claude Code
