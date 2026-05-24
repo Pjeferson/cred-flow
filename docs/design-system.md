@@ -1,4 +1,4 @@
-# Design system — Ledgr
+# Design system — CredFlow
 
 Interface para profissionais financeiros (gestores de FIDC, analistas de crédito).
 O visual transmite precisão e confiança — não leveza de consumidor.
@@ -140,7 +140,7 @@ Grid: `grid grid-cols-3 gap-2.5` — nunca mais que 4 métricas por linha.
   {/* logo */}
   <div className="px-4 pb-5 border-b border-[#E5E7EB] mb-2">
     <span className="text-[15px] font-medium text-[#111827]">
-      Ledgr
+      CredFlow
     </span>
   </div>
 

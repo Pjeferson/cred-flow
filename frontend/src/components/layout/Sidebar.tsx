@@ -57,7 +57,7 @@ export function Sidebar() {
   return (
     <aside className="w-[220px] shrink-0 bg-[#F9FAFB] border-r border-[#E5E7EB] py-5 flex flex-col gap-0.5">
       <div className="px-4 pb-5 border-b border-[#E5E7EB] mb-2">
-        <span className="text-[15px] font-medium text-[#111827]">Ledgr</span>
+        <span className="text-[15px] font-medium text-[#111827]">CredFlow</span>
       </div>
 
       <SectionLabel label="Operações" />
