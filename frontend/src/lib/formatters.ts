@@ -16,6 +16,11 @@ export function formatDateShort(iso: string): string {
   return format(new Date(iso), "d MMM yyyy", { locale: ptBR });
 }
 
+export function formatDateOnly(dateStr: string): string {
+  const [year, month, day] = dateStr.split("-").map(Number);
+  return format(new Date(year, month - 1, day), "d MMM yyyy", { locale: ptBR });
+}
+
 export function formatTTL(iso: string): string {
   return formatDistanceToNow(new Date(iso), { locale: ptBR });
 }

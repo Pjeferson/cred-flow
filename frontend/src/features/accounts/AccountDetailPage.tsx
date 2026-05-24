@@ -12,6 +12,9 @@ import { useAccount, useAccountBalance, useLedgerEntries } from "./useAccounts";
 import { formatCurrency, formatDate } from "@/lib/formatters";
 import { CreateTransferModal } from "@/features/payments/CreateTransferModal";
 import { ApprovalQueue } from "@/features/payments/ApprovalQueue";
+import { useCcbs, useCcb } from "@/features/receivables/useCcbs";
+import { InstallmentSchedule } from "@/features/receivables/InstallmentSchedule";
+import { Link } from "@tanstack/react-router";
 import type { LedgerEntry, LedgerEntryType } from "./types";
 
 function accountCode(account: { id: string; type: "escrow" | "empresa" }) {
@@ -94,6 +97,18 @@ export function AccountDetailPage({ accountId }: { accountId: string }) {
     useAccountBalance(accountId);
   const { data: entries, isLoading: loadingEntries } =
     useLedgerEntries(accountId);
+  const { data: ccbs } = useCcbs(accountId);
+  const activeCcb = ccbs?.find((c) => c.status === "active") ?? ccbs?.[0];
+  const { data: ccbDetail } = useCcb(activeCcb?.id ?? "");
+
+  const pendingInstallments = ccbDetail?.installments.filter(
+    (i) => i.status !== "paid"
+  ) ?? [];
+  const pendingAmount = pendingInstallments.reduce(
+    (sum, i) => sum + (i.amount_cents - i.paid_cents),
+    0
+  );
+  const previewInstallments = ccbDetail?.installments.slice(0, 5) ?? [];
 
   if (loadingAccount) {
     return (
@@ -184,12 +199,23 @@ export function AccountDetailPage({ accountId }: { accountId: string }) {
           <div className="bg-[#F4F5F7] rounded-lg p-4">
             <p className="text-[11px] font-medium uppercase tracking-wider text-[#9CA3AF] mb-1.5">
               A receber
+              {activeCcb && (
+                <span className="ml-1 normal-case font-normal">
+                  (CCB-{activeCcb.id.slice(-4).toUpperCase()})
+                </span>
+              )}
             </p>
-            <p className="text-[22px] font-medium tabular-nums text-[#9CA3AF]">
-              —
-            </p>
+            {!activeCcb ? (
+              <p className="text-[22px] font-medium tabular-nums text-[#9CA3AF]">—</p>
+            ) : (
+              <p className="text-[22px] font-medium tabular-nums text-[#4F46E5]">
+                {formatCurrency(pendingAmount)}
+              </p>
+            )}
             <p className="text-[11px] text-[#9CA3AF] mt-0.5">
-              CCBs disponíveis em breve
+              {activeCcb
+                ? `${activeCcb.installment_count} parcelas · ${pendingInstallments.length} pendentes`
+                : "Nenhuma CCB ativa"}
             </p>
           </div>
         </div>
@@ -226,6 +252,25 @@ export function AccountDetailPage({ accountId }: { accountId: string }) {
             }
           />
         </div>
+
+        {/* Installments preview */}
+        {activeCcb && (
+          <div className="bg-white border border-[#E5E7EB] rounded-xl overflow-hidden">
+            <div className="px-5 py-4 border-b border-[#E5E7EB] flex items-center justify-between">
+              <h2 className="text-[13px] font-medium text-[#111827]">
+                Parcelas — CCB-{activeCcb.id.slice(-4).toUpperCase()}
+              </h2>
+              <Link
+                to="/ccbs/$ccbId"
+                params={{ ccbId: activeCcb.id }}
+                className="text-[12px] text-[#4F46E5] hover:underline"
+              >
+                ver CCB completa
+              </Link>
+            </div>
+            <InstallmentSchedule installments={previewInstallments} />
+          </div>
+        )}
       </div>
 
       {showTransfer && (

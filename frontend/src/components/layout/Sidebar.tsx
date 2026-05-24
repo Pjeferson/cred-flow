@@ -79,8 +79,13 @@ export function Sidebar() {
       />
 
       <SectionLabel label="Crédito" />
-      <NavItem to="/" icon={<IconFileText size={16} />} label="CCBs" />
-      <NavItem to="/" icon={<IconCalendar size={16} />} label="Parcelas" />
+      <NavItem
+        to="/ccbs"
+        matchPrefix="/ccbs"
+        icon={<IconFileText size={16} />}
+        label="CCBs"
+      />
+      <NavItem to="/ccbs" icon={<IconCalendar size={16} />} label="Parcelas" />
       <NavItem
         to="/"
         icon={<IconChartBar size={16} />}
