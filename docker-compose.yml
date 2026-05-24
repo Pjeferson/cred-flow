@@ -203,6 +203,18 @@ services:
       - ./frontend:/app
       - node_modules-frontend:/app/node_modules
 
+  # ── Playwright E2E (profile: e2e) ───────────────────────────────────────────
+
+  playwright:
+    image: mcr.microsoft.com/playwright:v1.52.0-noble
+    working_dir: /app
+    network_mode: host
+    volumes:
+      - ./frontend:/app
+      - node_modules-frontend:/app/node_modules
+    profiles: ["e2e"]
+    command: npx playwright test
+
   # ── API Gateway ─────────────────────────────────────────────────────────────
 
   api-gateway:

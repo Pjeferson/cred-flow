@@ -379,11 +379,11 @@ Ver filas e routing keys em `@docs/rabbitmq.md`
 
 ### Fase 11 — Testes de Frontend
 
-- [ ] **TASK-49**: Setup do ambiente de testes frontend — `vitest.config.ts` com jsdom, `setup.ts` com mocks globais de TanStack Router/Query; instalar e configurar MSW 2.x para interceptação de HTTP nos testes de componente
-- [ ] **TASK-50**: Testes unitários de `src/lib/` — `formatters.ts` (formatCurrency, formatDate, formatDateOnly, policyReason) e `utils.ts`; sem mocks, cobertura 100% das funções exportadas
-- [ ] **TASK-51**: Testes de auth com Testing Library + MSW — `LoginPage` e `RegisterPage` renderizadas como página completa; MSW simula `POST /api/v1/auth/sign_in` (sucesso e 401); verificar redirect, exibição de erro e persistência do token; testar `authStore` isolado
-- [ ] **TASK-52**: Testes de páginas de domínio com Testing Library + MSW — `ParticipantsPage`, `AccountsPage`, `ApprovalsPage` e `MonitoringPage` renderizadas como página completa; MSW serve dados realistas; verificar render de lista, loading state e mensagem de lista vazia
-- [ ] **TASK-53**: Testes Playwright (E2E) contra o Docker Compose — configurar `playwright.config.ts` apontando para `http://localhost:5173`; cobrir os 3 fluxos críticos: (1) login → dashboard, (2) criar payment order → aparece em pending, (3) aprovar ordem → status muda para settled
+- [x] **TASK-49**: Setup do ambiente de testes frontend — `vitest.config.ts` com jsdom, `setup.ts` com mocks globais de TanStack Router/Query; instalar e configurar MSW 2.x para interceptação de HTTP nos testes de componente
+- [x] **TASK-50**: Testes unitários de `src/lib/` — `formatters.ts` (formatCurrency, formatDate, formatDateOnly, policyReason) e `utils.ts`; sem mocks, cobertura 100% das funções exportadas
+- [x] **TASK-51**: Testes de auth com Testing Library + MSW — `LoginPage` e `RegisterPage` renderizadas como página completa; MSW simula `POST /api/v1/auth/sign_in` (sucesso e 401); verificar redirect, exibição de erro e persistência do token; testar `authStore` isolado
+- [x] **TASK-52**: Testes de páginas de domínio com Testing Library + MSW — `ParticipantsPage`, `AccountsPage`, `ApprovalsPage` e `MonitoringPage` renderizadas como página completa; MSW serve dados realistas; verificar render de lista, loading state e mensagem de lista vazia
+- [x] **TASK-53**: Testes Playwright (E2E) contra o Docker Compose — configurar `playwright.config.ts` apontando para `http://localhost:5173`; cobrir os 3 fluxos críticos: (1) login → dashboard, (2) criar payment order → aparece em pending, (3) aprovar ordem → status muda para settled
 
 ---
 
