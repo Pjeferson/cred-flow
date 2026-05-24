@@ -14,13 +14,13 @@ test.describe("Fluxo 2 — Criar payment order → aparece em pending", () => {
 
   test("cria payment order e ela aparece na lista de aprovações", async ({ page }) => {
     // Navegar para a tela de contas
-    await page.getByRole("link", { name: /contas/i }).click();
-    await expect(page.getByRole("heading", { name: /contas/i })).toBeVisible();
+    await page.getByRole("link", { name: /conta vinculada/i }).click();
+    await expect(page.getByRole("heading", { name: /contas vinculadas/i })).toBeVisible();
 
     // Selecionar a primeira conta ativa
     const firstAccount = page.locator("table tbody tr").first();
     await expect(firstAccount).toBeVisible();
-    await firstAccount.locator("button, a").last().click();
+    await firstAccount.click();
 
     // Aguardar tela de detalhe da conta
     await expect(page).toHaveURL(/\/accounts\//);
@@ -29,16 +29,18 @@ test.describe("Fluxo 2 — Criar payment order → aparece em pending", () => {
     await page.getByRole("button", { name: /nova transferência/i }).click();
 
     // Preencher formulário de payment order
-    await page.getByLabel(/beneficiário/i).fill("67.890.123/0001-41");
     await page.getByLabel(/valor/i).fill("3000");
+    await page.getByLabel(/cnpj \/ cpf do beneficiário/i).fill("67.890.123/0001-41");
 
-    const idemKey = `e2e-${Date.now()}`;
-    await page.getByLabel(/idempotency/i).fill(idemKey);
+    await page.getByRole("button", { name: /enviar pedido/i }).click();
 
-    await page.getByRole("button", { name: /confirmar/i }).click();
+    // Modal fecha após criação bem-sucedida
+    await expect(page.getByRole("button", { name: /enviar pedido/i })).not.toBeVisible({
+      timeout: 10_000,
+    });
 
-    // Verificar que a ordem foi criada (success ou pending_approval)
-    await expect(page.getByText(/pedido criado|aguardando aprovação/i)).toBeVisible({
+    // Ordem aparece na fila de aprovação da conta
+    await expect(page.getByRole("button", { name: /revisar e aprovar/i }).first()).toBeVisible({
       timeout: 10_000,
     });
   });

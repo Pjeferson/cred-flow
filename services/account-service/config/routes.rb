@@ -32,6 +32,7 @@ Rails.application.routes.draw do
     resources :accounts, only: [] do
       resources :ledger_entries, only: %i[index create]
     end
+    post "e2e/seed", to: "e2e#seed"
   end
 
   get "up" => "rails/health#show", as: :rails_health_check

@@ -1,0 +1,20 @@
+# Override para testes E2E — injeta RAILS_ENV=test nos serviços Rails.
+# Os bancos de test (_test) são usados; bancos de development ficam intocados.
+#
+# Uso:
+#   docker compose -f docker-compose.yml -f docker-compose.e2e.yml up -d
+#   docker compose --profile e2e run --rm playwright \
+#     /app/node_modules/.bin/playwright test --config=/app/playwright.config.ts
+
+services:
+  account-service:
+    environment:
+      RAILS_ENV: test
+
+  payment-service:
+    environment:
+      RAILS_ENV: test
+
+  receivables-service:
+    environment:
+      RAILS_ENV: test

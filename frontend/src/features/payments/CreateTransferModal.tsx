@@ -65,10 +65,11 @@ export function CreateTransferModal({ accountId, onClose }: Props) {
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <div className="flex flex-col gap-1">
-            <label className="text-[11px] font-medium uppercase tracking-wider text-[#9CA3AF]">
+            <label htmlFor="transfer-amount" className="text-[11px] font-medium uppercase tracking-wider text-[#9CA3AF]">
               Valor (R$)
             </label>
             <input
+              id="transfer-amount"
               required
               type="number"
               min="0.01"
@@ -81,10 +82,11 @@ export function CreateTransferModal({ accountId, onClose }: Props) {
           </div>
 
           <div className="flex flex-col gap-1">
-            <label className="text-[11px] font-medium uppercase tracking-wider text-[#9CA3AF]">
+            <label htmlFor="transfer-beneficiary-doc" className="text-[11px] font-medium uppercase tracking-wider text-[#9CA3AF]">
               CNPJ / CPF do beneficiário
             </label>
             <input
+              id="transfer-beneficiary-doc"
               required
               value={form.beneficiary_doc}
               onChange={(e) =>
@@ -96,10 +98,11 @@ export function CreateTransferModal({ accountId, onClose }: Props) {
           </div>
 
           <div className="flex flex-col gap-1">
-            <label className="text-[11px] font-medium uppercase tracking-wider text-[#9CA3AF]">
+            <label htmlFor="transfer-beneficiary-name" className="text-[11px] font-medium uppercase tracking-wider text-[#9CA3AF]">
               Nome do beneficiário (opcional)
             </label>
             <input
+              id="transfer-beneficiary-name"
               value={form.beneficiary_name}
               onChange={(e) =>
                 setForm({ ...form, beneficiary_name: e.target.value })

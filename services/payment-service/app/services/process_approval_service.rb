@@ -19,7 +19,7 @@ class ProcessApprovalService
     end
 
     policy_rules  = fetch_policy_rules(payment_order.account_id)
-    threshold_cfg = (policy_rules.dig("approval_threshold") || {}).symbolize_keys
+    threshold_cfg = policy_rules.dig(:approval_threshold) || {}
     required      = (threshold_cfg[:required] || 1).to_i
 
     if payment_order.approvals.approved.count >= required

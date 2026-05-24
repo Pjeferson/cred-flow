@@ -9,5 +9,9 @@ Rails.application.routes.draw do
     end
   end
 
+  namespace :internal do
+    post "e2e/seed", to: "e2e#seed"
+  end
+
   get "up" => "rails/health#show", as: :rails_health_check
 end

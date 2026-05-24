@@ -28,3 +28,7 @@ src/routeTree.gen.ts
 
 # Cobertura de testes
 coverage/
+
+# Playwright
+test-results/
+playwright-report/

@@ -26,8 +26,8 @@ export const api = ky.create({
       },
     ],
     afterResponse: [
-      async (_request, _options, response) => {
-        if (response.status === 401) {
+      async (request, _options, response) => {
+        if (response.status === 401 && !request.url.includes("/auth/")) {
           clearToken();
           window.location.href = "/login";
         }

@@ -155,8 +155,26 @@ docker compose run --rm -e RAILS_ENV=test receivables-service bundle exec rspec
 # Logs de um serviço
 docker compose logs -f payment-service
 
-# Frontend
-docker compose run --rm frontend npm run test
+# Frontend — testes unitários e de componente (Vitest + MSW)
+docker compose run --rm frontend npm run test        # modo watch
+docker compose run --rm frontend npm run test -- --run  # CI / execução única
+
+# Frontend — testes E2E (Playwright) — usa RAILS_ENV=test, bancos de dev intocados
+# Primeira vez: criar os bancos de test se ainda não existirem
+docker compose -f docker-compose.yml -f docker-compose.e2e.yml run --rm account-service bundle exec rails db:create db:schema:load
+docker compose -f docker-compose.yml -f docker-compose.e2e.yml run --rm payment-service bundle exec rails db:create db:schema:load
+
+# Subir stack em modo test e rodar Playwright (globalSetup faz o seed automaticamente)
+docker compose -f docker-compose.yml -f docker-compose.e2e.yml up -d
+docker compose --profile e2e run --rm playwright \
+  /app/node_modules/.bin/playwright test \
+  --config=/app/playwright.config.ts --reporter=list
+
+# Ao terminar, voltar para modo dev
+docker compose down
+docker compose up -d
+
+# Frontend — build de produção
 docker compose run --rm frontend npm run build
 ```
 
@@ -190,6 +208,18 @@ docker compose run --rm account-service bundle exec rails runner \
 **Solid Queue:**
 - Jobs agendados (cron) configurados em `config/recurring.yml`
 - Em dev, o Solid Queue supervisor sobe junto com o Puma via `Procfile.dev`
+
+**Testes de frontend — dois conjuntos distintos, dois comandos distintos:**
+- `npm run test` → apenas Vitest (unitários + componente com MSW). Roda isolado, sem stack.
+- `npm run test:e2e` → apenas Playwright (E2E). Exige stack completo no ar (`docker compose up -d`).
+- Os dois nunca rodam juntos. Marcar uma task de testes como concluída exige rodar **ambos**.
+
+**Playwright — armadilhas conhecidas:**
+- Os arquivos de teste têm extensão `.e2e.ts`, não `.spec.ts`. O `playwright.config.ts` precisa de `testMatch: "**/*.e2e.ts"` — sem isso, `0 tests found` e o comando sai com sucesso silencioso.
+- A imagem Docker do Playwright (`mcr.microsoft.com/playwright:vX.Y.Z-noble`) deve ter a mesma versão `X.Y.Z` que o pacote `@playwright/test` no `package.json`. Versões diferentes causam erro de browser não encontrado.
+- Se um serviço Rails reiniciou desde que o Nginx subiu, rodar `docker compose restart api-gateway` antes dos E2E — o Nginx resolve DNS dos upstreams só na inicialização e pode rotear para o container errado.
+- O serviço Playwright usa `profiles: ["e2e"]` no compose, portanto não sobe com `docker compose up`. Chamar via `docker compose --profile e2e run --rm playwright ...`.
+- O binário correto dentro do container é `/app/node_modules/.bin/playwright`, não `npx playwright` — o `npx` pode pegar uma versão global diferente da do projeto.
 
 ---
 
