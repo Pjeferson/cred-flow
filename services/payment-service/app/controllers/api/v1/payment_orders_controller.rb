@@ -7,7 +7,9 @@ module Api
 
       def index
         orders = PaymentOrder
+          .includes(:approvals)
           .then { params[:account_id].present? ? _1.where(account_id: params[:account_id]) : _1 }
+          .then { params[:status].present? ? _1.where(status: params[:status]) : _1 }
           .order(created_at: :desc)
         render json: PaymentOrderSerializer.new(orders).serializable_hash
       end

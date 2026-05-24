@@ -19,3 +19,14 @@ export function formatDateShort(iso: string): string {
 export function formatTTL(iso: string): string {
   return formatDistanceToNow(new Date(iso), { locale: ptBR });
 }
+
+const policyReasons: Record<string, string> = {
+  amount_threshold: "valor acima do limite",
+  new_beneficiary: "beneficiário novo",
+  daily_limit_exceeded: "limite diário atingido",
+  outside_banking_hours: "fora do horário SPB",
+};
+
+export function policyReason(action: string): string {
+  return policyReasons[action] ?? action;
+}

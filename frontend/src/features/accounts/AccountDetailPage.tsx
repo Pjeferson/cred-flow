@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import {
   IconArrowLeft,
@@ -9,6 +10,8 @@ import {
 } from "@tabler/icons-react";
 import { useAccount, useAccountBalance, useLedgerEntries } from "./useAccounts";
 import { formatCurrency, formatDate } from "@/lib/formatters";
+import { CreateTransferModal } from "@/features/payments/CreateTransferModal";
+import { ApprovalQueue } from "@/features/payments/ApprovalQueue";
 import type { LedgerEntry, LedgerEntryType } from "./types";
 
 function accountCode(account: { id: string; type: "escrow" | "empresa" }) {
@@ -85,6 +88,7 @@ function LedgerItem({ entry }: { entry: LedgerEntry }) {
 
 export function AccountDetailPage({ accountId }: { accountId: string }) {
   const navigate = useNavigate();
+  const [showTransfer, setShowTransfer] = useState(false);
   const { data: account, isLoading: loadingAccount } = useAccount(accountId);
   const { data: balance, isLoading: loadingBalance } =
     useAccountBalance(accountId);
@@ -133,9 +137,8 @@ export function AccountDetailPage({ accountId }: { accountId: string }) {
           </div>
         </div>
         <button
-          disabled
-          title="Disponível em TASK-41"
-          className="bg-[#4F46E5] text-white text-[13px] font-medium px-3.5 py-[7px] rounded-lg flex items-center gap-1.5 opacity-40 cursor-not-allowed"
+          onClick={() => setShowTransfer(true)}
+          className="bg-[#4F46E5] text-white text-[13px] font-medium px-3.5 py-[7px] rounded-lg flex items-center gap-1.5 hover:bg-[#4338CA] active:scale-[0.98] transition-all"
         >
           <IconArrowUpRight size={14} />
           Nova transferência
@@ -216,19 +219,21 @@ export function AccountDetailPage({ accountId }: { accountId: string }) {
             )}
           </div>
 
-          {/* Approval queue - placeholder for TASK-41 */}
-          <div className="bg-white border border-[#E5E7EB] rounded-xl p-5">
-            <div className="flex items-center justify-between mb-3">
-              <h2 className="text-[13px] font-medium text-[#111827]">
-                Fila de aprovação
-              </h2>
-            </div>
-            <p className="text-[12px] text-[#9CA3AF] text-center py-8">
-              Nenhuma aprovação pendente
-            </p>
-          </div>
+          <ApprovalQueue
+            accountId={accountId}
+            thresholdRequired={
+              account.policy_rules?.approval_threshold?.required ?? 1
+            }
+          />
         </div>
       </div>
+
+      {showTransfer && (
+        <CreateTransferModal
+          accountId={accountId}
+          onClose={() => setShowTransfer(false)}
+        />
+      )}
     </div>
   );
 }

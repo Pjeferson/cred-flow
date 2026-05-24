@@ -73,7 +73,7 @@ export function Sidebar() {
         label="Pagamentos"
       />
       <NavItem
-        to="/"
+        to="/approvals"
         icon={<IconChecks size={16} />}
         label="Aprovações"
       />

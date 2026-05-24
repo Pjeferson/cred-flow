@@ -10,4 +10,6 @@ class PaymentOrderSerializer
              :policy_action, :rejection_reason, :spb_transaction_id,
              :idempotency_key, :scheduled_for, :expires_at,
              :executed_at, :settled_at, :created_at
+
+  attribute(:approvals_count) { |o| o.approvals.approved.count }
 end
