@@ -228,9 +228,13 @@ export function AccountDetailPage({ accountId }: { accountId: string }) {
               <h2 className="text-[13px] font-medium text-[#111827]">
                 Ledger
               </h2>
-              <span className="text-[12px] text-[#9CA3AF]">
-                últimas 10 entradas
-              </span>
+              <Link
+                to="/accounts/$accountId/statement"
+                params={{ accountId }}
+                className="text-[12px] text-[#4F46E5] hover:underline"
+              >
+                ver tudo
+              </Link>
             </div>
             {loadingEntries ? (
               <p className="text-[13px] text-[#9CA3AF] py-6 text-center">

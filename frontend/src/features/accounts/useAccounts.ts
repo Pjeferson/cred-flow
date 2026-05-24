@@ -61,6 +61,34 @@ export function useLedgerEntries(accountId: string, page = 1) {
   });
 }
 
+interface LedgerMeta {
+  total_count: number;
+  total_pages: number;
+  current_page: number;
+  per_page: number;
+}
+
+export function useStatementEntries(accountId: string, page = 1) {
+  return useQuery({
+    queryKey: ["accounts", accountId, "statement", page],
+    queryFn: async () => {
+      const res: {
+        data: JsonApiItem<Omit<LedgerEntry, "id">>[];
+        meta?: LedgerMeta;
+      } = await api
+        .get(`api/v1/accounts/${accountId}/ledger_entries`, {
+          searchParams: { page, per_page: 20 },
+        })
+        .json();
+      return {
+        entries: res.data.map(flatten),
+        meta: res.meta,
+      };
+    },
+    enabled: !!accountId,
+  });
+}
+
 export function useCreateAccount() {
   const qc = useQueryClient();
   return useMutation({

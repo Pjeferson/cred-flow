@@ -1,9 +1,5 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { AccountDetailPage } from "@/features/accounts/AccountDetailPage";
+import { createFileRoute, Outlet } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/_authenticated/accounts/$accountId")({
-  component: function AccountDetailRoute() {
-    const { accountId } = Route.useParams();
-    return <AccountDetailPage accountId={accountId} />;
-  },
+  component: () => <Outlet />,
 });

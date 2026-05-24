@@ -15,7 +15,16 @@ module Api
           .limit(per_page)
           .offset((page - 1) * per_page)
 
-        render json: LedgerEntrySerializer.new(entries).serializable_hash
+        total = LedgerEntry.where(account_id: params[:account_id]).count
+
+        render json: LedgerEntrySerializer.new(entries).serializable_hash.merge(
+          meta: {
+            total_count:  total,
+            total_pages:  (total.to_f / per_page).ceil,
+            current_page: page,
+            per_page:     per_page
+          }
+        )
       end
     end
   end
