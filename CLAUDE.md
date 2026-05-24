@@ -368,7 +368,7 @@ Ver filas e routing keys em `@docs/rabbitmq.md`
 - [x] **TASK-41**: Fluxo de payment order: criar pedido + tela de aprovação (dupla alçada)
 - [x] **TASK-42**: Dashboard de CCBs e cronograma de parcelas
 - [x] **TASK-43**: Extrato da conta vinculada (ledger entries com paginação)
-- [ ] **TASK-44**: Painel de monitoramento (reconciliação, inadimplência, DLQ status)
+- [x] **TASK-44**: Painel de monitoramento (reconciliação, inadimplência, DLQ status)
 
 ### Fase 10 — Testes e Seeds
 

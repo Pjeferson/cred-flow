@@ -5,9 +5,9 @@ import {
   IconChecks,
   IconFileText,
   IconCalendar,
-  IconChartBar,
   IconUsers,
   IconSettings,
+  IconActivity,
 } from "@tabler/icons-react";
 
 interface NavItemProps {
@@ -87,9 +87,9 @@ export function Sidebar() {
       />
       <NavItem to="/ccbs" icon={<IconCalendar size={16} />} label="Parcelas" />
       <NavItem
-        to="/"
-        icon={<IconChartBar size={16} />}
-        label="Conciliação"
+        to="/monitoring"
+        icon={<IconActivity size={16} />}
+        label="Monitoramento"
       />
 
       <SectionLabel label="Configuração" />

@@ -168,6 +168,9 @@ services:
       DATABASE_URL: postgresql://credflow:credflow@postgres-receivables:5432/receivables_service_development
       REDIS_URL: redis://redis:6379/2
       RABBITMQ_URL: amqp://credflow:credflow@rabbitmq:5672
+      RABBITMQ_MANAGEMENT_URL: http://rabbitmq:15672
+      RABBITMQ_MANAGEMENT_USER: credflow
+      RABBITMQ_MANAGEMENT_PASS: credflow
       SPB_MOCK_URL: http://spb-mock:4001
       BOLETO_MOCK_URL: http://boleto-mock:4003
       ACCOUNT_SERVICE_URL: http://account-service:3000
