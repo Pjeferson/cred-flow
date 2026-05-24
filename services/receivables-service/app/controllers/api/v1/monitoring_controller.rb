@@ -29,7 +29,7 @@ module Api
         overdue = Installment.overdue
         {
           count: overdue.count,
-          total_amount_cents: overdue.sum("amount_cents - paid_cents"),
+          total_amount_cents: overdue.sum("amount_cents - paid_cents").to_i,
           oldest_due_date: overdue.minimum(:due_date)
         }
       end
