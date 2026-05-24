@@ -375,7 +375,7 @@ Ver filas e routing keys em `@docs/rabbitmq.md`
 - [x] **TASK-45**: Request specs RSpec para account-service (participants, accounts, ledger, balance)
 - [x] **TASK-46**: Request specs RSpec para payment-service (payment orders, approvals, policy engine)
 - [x] **TASK-47**: Request specs RSpec para receivables-service (CCBs, installments, reconciliation)
-- [ ] **TASK-48**: Seeds realistas com Faker cobrindo o fluxo completo ponta a ponta
+- [x] **TASK-48**: Seeds realistas com Faker cobrindo o fluxo completo ponta a ponta
 
 ---
 
