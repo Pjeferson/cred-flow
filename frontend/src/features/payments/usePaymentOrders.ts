@@ -50,6 +50,9 @@ export function useCreatePaymentOrder() {
       qc.invalidateQueries({
         queryKey: ["accounts", variables.account_id, "balance"],
       });
+      qc.invalidateQueries({
+        queryKey: ["accounts", variables.account_id, "ledger_entries"],
+      });
     },
   });
 }

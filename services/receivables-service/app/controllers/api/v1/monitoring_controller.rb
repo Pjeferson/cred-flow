@@ -53,6 +53,9 @@ module Api
             consumers:      data["consumers"] || 0,
             error:          nil
           }
+        elsif resp.status == 404
+          # Fila ainda não foi criada (nenhum consumer rodou ou nenhuma mensagem dead-lettered)
+          { messages: 0, messages_ready: 0, consumers: 0, error: nil }
         else
           { messages: 0, messages_ready: 0, consumers: 0, error: "management_api_error" }
         end

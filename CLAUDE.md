@@ -425,6 +425,12 @@ Ver filas e routing keys em `@docs/rabbitmq.md`
 - [x] **TASK-53**: Testes Playwright (E2E) contra o Docker Compose — configurar `playwright.config.ts` apontando para `http://localhost:5173`; cobrir os 3 fluxos críticos: (1) login → dashboard, (2) criar payment order → aparece em pending, (3) aprovar ordem → status muda para settled
 - [x] **TASK-54**: Banco de test isolado para E2E — `docker-compose.e2e.yml` com `RAILS_ENV=test`; endpoints `POST /internal/e2e/seed` em account-service e payment-service; `globalSetup` do Playwright semeia dados controlados antes de cada suíte; 6/6 testes passando sem tocar banco de dev
 
+### Backlog Enterprise — funcionalidades para ambiente produtivo
+
+> Tasks sem numeração sequencial — representam evoluções arquiteturais além do escopo de portfólio. Implementar apenas quando o contexto exigir.
+
+- [ ] **ENT-01**: RBAC multi-tenant — vincular `User` a um `Participant` (`user.participant_id`); adicionar `role` ao `User` (admin, approver, viewer); restringir endpoints por papel: cedente só vê as próprias contas, credor só aprova ordens das contas onde é credor, sacado tem acesso somente leitura. `Approval#approver_id` passa a ser o `User#id` real com validação de pertencimento ao credor da conta.
+
 ---
 
 ## Regras para o Claude Code

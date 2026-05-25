@@ -1,14 +1,13 @@
-import { Link, useRouterState } from "@tanstack/react-router";
+import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
 import {
   IconBuildingBank,
-  IconArrowUpRight,
   IconChecks,
   IconFileText,
-  IconCalendar,
   IconUsers,
-  IconSettings,
   IconActivity,
+  IconLogout,
 } from "@tabler/icons-react";
+import { useAuthStore } from "@/store/authStore";
 
 interface NavItemProps {
   to: string;
@@ -54,6 +53,14 @@ function SectionLabel({ label }: { label: string }) {
 }
 
 export function Sidebar() {
+  const logout = useAuthStore((s) => s.logout);
+  const navigate = useNavigate();
+
+  function handleLogout() {
+    logout();
+    navigate({ to: "/login" });
+  }
+
   return (
     <aside className="w-[220px] shrink-0 bg-[#F9FAFB] border-r border-[#E5E7EB] py-5 flex flex-col gap-0.5">
       <div className="px-4 pb-5 border-b border-[#E5E7EB] mb-2">
@@ -68,11 +75,6 @@ export function Sidebar() {
         label="Conta vinculada"
       />
       <NavItem
-        to="/"
-        icon={<IconArrowUpRight size={16} />}
-        label="Pagamentos"
-      />
-      <NavItem
         to="/approvals"
         icon={<IconChecks size={16} />}
         label="Aprovações"
@@ -85,7 +87,6 @@ export function Sidebar() {
         icon={<IconFileText size={16} />}
         label="CCBs"
       />
-      <NavItem to="/ccbs" icon={<IconCalendar size={16} />} label="Parcelas" />
       <NavItem
         to="/monitoring"
         icon={<IconActivity size={16} />}
@@ -98,11 +99,16 @@ export function Sidebar() {
         icon={<IconUsers size={16} />}
         label="Participantes"
       />
-      <NavItem
-        to="/"
-        icon={<IconSettings size={16} />}
-        label="Políticas"
-      />
+
+      <div className="mt-auto border-t border-[#E5E7EB] pt-2">
+        <button
+          onClick={handleLogout}
+          className="flex w-full items-center gap-2.5 px-4 py-[7px] text-[13px] text-[#6B7280] transition-colors hover:bg-white hover:text-[#111827] cursor-pointer"
+        >
+          <span className="text-[16px] shrink-0"><IconLogout size={16} /></span>
+          <span>Sair</span>
+        </button>
+      </div>
     </aside>
   );
 }
