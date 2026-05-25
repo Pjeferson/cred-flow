@@ -8,6 +8,7 @@ require "securerandom"
 
 set :port, 4003
 set :bind, "0.0.0.0"
+set :host_authorization, { permitted_hosts: [] }
 
 # Base date for boleto due-date factor (days since 07/10/1997)
 BOLETO_BASE_DATE = Date.new(1997, 10, 7)

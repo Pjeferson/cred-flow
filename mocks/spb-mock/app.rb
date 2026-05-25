@@ -8,6 +8,7 @@ require "sqlite3"
 
 set :port, 4001
 set :bind, "0.0.0.0"
+set :host_authorization, { permitted_hosts: [] }
 
 DB = SQLite3::Database.new(ENV.fetch("DB_PATH", "./db/spb.sqlite3")).tap do |conn|
   conn.results_as_hash = true

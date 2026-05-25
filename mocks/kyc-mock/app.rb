@@ -6,6 +6,7 @@ require "json"
 
 set :port, 4002
 set :bind, "0.0.0.0"
+set :host_authorization, { permitted_hosts: [] }
 
 CPF_FORMAT  = /\A\d{3}\.\d{3}\.\d{3}-\d{2}\z/
 CNPJ_FORMAT = /\A\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2}\z/
