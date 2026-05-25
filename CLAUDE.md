@@ -430,6 +430,7 @@ Ver filas e routing keys em `@docs/rabbitmq.md`
 > Tasks sem numeração sequencial — representam evoluções arquiteturais além do escopo de portfólio. Implementar apenas quando o contexto exigir.
 
 - [ ] **ENT-01**: RBAC multi-tenant — vincular `User` a um `Participant` (`user.participant_id`); adicionar `role` ao `User` (admin, approver, viewer); restringir endpoints por papel: cedente só vê as próprias contas, credor só aprova ordens das contas onde é credor, sacado tem acesso somente leitura. `Approval#approver_id` passa a ser o `User#id` real com validação de pertencimento ao credor da conta.
+- [ ] **ENT-02**: Página de parcelas vencidas para cobrança em lote — endpoint `GET /api/v1/installments?status=overdue` no receivables-service com paginação; rota `/installments` no frontend exibindo tabela filtrável por status (`overdue`, `pending`, `partially_paid`); card de inadimplência no painel de monitoramento vira link direto para `/installments?status=overdue`; seleção múltipla de parcelas para disparo de cobrança em lote (ex: reenvio de boleto via boleto-mock).
 
 ---
 

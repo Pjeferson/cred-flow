@@ -1,6 +1,5 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { CcbsPage } from "@/features/receivables/CcbsPage";
+import { createFileRoute, Outlet } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/_authenticated/ccbs")({
-  component: CcbsPage,
+  component: () => <Outlet />,
 });
