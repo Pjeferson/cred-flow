@@ -8,6 +8,7 @@ import {
   IconLogout,
 } from "@tabler/icons-react";
 import { useAuthStore } from "@/store/authStore";
+import wordmark from "@/assets/credflow_wordmark.svg";
 
 interface NavItemProps {
   to: string;
@@ -64,7 +65,7 @@ export function Sidebar() {
   return (
     <aside className="w-[220px] shrink-0 bg-[#F9FAFB] border-r border-[#E5E7EB] py-5 flex flex-col gap-0.5">
       <div className="px-4 pb-5 border-b border-[#E5E7EB] mb-2">
-        <span className="text-[15px] font-medium text-[#111827]">CredFlow</span>
+        <img src={wordmark} alt="CredFlow" className="h-6 w-auto" />
       </div>
 
       <SectionLabel label="Operações" />
