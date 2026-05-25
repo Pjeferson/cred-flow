@@ -218,11 +218,11 @@ services:
 
   account-consumer:
     <<: *account-base
-    command: bundle exec sneakers work PaymentSettledConsumer PaymentFailedConsumer PaymentFailedNotificationConsumer ApprovalRequestedConsumer
+    command: bundle exec sneakers work PaymentSettledConsumer,PaymentFailedConsumer,PaymentFailedNotificationConsumer,ApprovalRequestedConsumer --require ./config/environment.rb
 
   receivables-consumer:
     <<: *receivables-base
-    command: bundle exec sneakers work PaymentSettledConsumer
+    command: bundle exec sneakers work PaymentSettledConsumer --require ./config/environment.rb
 
   # ── Frontend ────────────────────────────────────────────────────────────────
 
