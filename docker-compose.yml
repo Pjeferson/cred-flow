@@ -1,5 +1,85 @@
 name: credflow
 
+# ── Bases reutilizáveis (YAML anchors) ────────────────────────────────────────
+
+x-account-base: &account-base
+  build:
+    context: services/account-service
+  environment:
+    DATABASE_URL: postgresql://credflow:credflow@postgres-account:5432/account_service_development
+    REDIS_URL: redis://redis:6379/0
+    RABBITMQ_URL: amqp://credflow:credflow@rabbitmq:5672
+    KYC_MOCK_URL: http://kyc-mock:4002
+    RAILS_ENV: development
+    RAILS_LOG_TO_STDOUT: "true"
+    SECRET_KEY_BASE: dev_secret_key_base_account_service_changeme
+    DEVISE_JWT_SECRET_KEY: dev_jwt_secret_key_changeme_in_production
+    INTERNAL_SERVICE_KEY: credflow-internal
+  depends_on:
+    postgres-account:
+      condition: service_healthy
+    redis:
+      condition: service_healthy
+    rabbitmq:
+      condition: service_healthy
+  volumes:
+    - ./services/account-service:/app
+    - bundle-account:/usr/local/bundle
+
+x-payment-base: &payment-base
+  build:
+    context: services/payment-service
+  environment:
+    DATABASE_URL: postgresql://credflow:credflow@postgres-payment:5432/payment_service_development
+    REDIS_URL: redis://redis:6379/1
+    RABBITMQ_URL: amqp://credflow:credflow@rabbitmq:5672
+    SPB_MOCK_URL: http://spb-mock:4001
+    ACCOUNT_SERVICE_URL: http://account-service:3000
+    DEVISE_JWT_SECRET_KEY: dev_jwt_secret_key_changeme_in_production
+    INTERNAL_SERVICE_KEY: credflow-internal
+    RAILS_ENV: development
+    RAILS_LOG_TO_STDOUT: "true"
+    SECRET_KEY_BASE: dev_secret_key_base_payment_service_changeme
+  depends_on:
+    postgres-payment:
+      condition: service_healthy
+    redis:
+      condition: service_healthy
+    rabbitmq:
+      condition: service_healthy
+  volumes:
+    - ./services/payment-service:/app
+    - bundle-payment:/usr/local/bundle
+
+x-receivables-base: &receivables-base
+  build:
+    context: services/receivables-service
+  environment:
+    DATABASE_URL: postgresql://credflow:credflow@postgres-receivables:5432/receivables_service_development
+    REDIS_URL: redis://redis:6379/2
+    RABBITMQ_URL: amqp://credflow:credflow@rabbitmq:5672
+    RABBITMQ_MANAGEMENT_URL: http://rabbitmq:15672
+    RABBITMQ_MANAGEMENT_USER: credflow
+    RABBITMQ_MANAGEMENT_PASS: credflow
+    SPB_MOCK_URL: http://spb-mock:4001
+    BOLETO_MOCK_URL: http://boleto-mock:4003
+    ACCOUNT_SERVICE_URL: http://account-service:3000
+    RAILS_ENV: development
+    RAILS_LOG_TO_STDOUT: "true"
+    SECRET_KEY_BASE: dev_secret_key_base_receivables_service_changeme
+    DEVISE_JWT_SECRET_KEY: dev_jwt_secret_key_changeme_in_production
+    INTERNAL_SERVICE_KEY: credflow-internal
+  depends_on:
+    postgres-receivables:
+      condition: service_healthy
+    redis:
+      condition: service_healthy
+    rabbitmq:
+      condition: service_healthy
+  volumes:
+    - ./services/receivables-service:/app
+    - bundle-receivables:/usr/local/bundle
+
 services:
 
   # ── Infraestrutura ──────────────────────────────────────────────────────────
@@ -104,94 +184,45 @@ services:
     ports:
       - "4003:4003"
 
-  # ── Serviços Rails ──────────────────────────────────────────────────────────
+  # ── Serviços Rails — API ─────────────────────────────────────────────────────
 
   account-service:
-    build:
-      context: services/account-service
+    <<: *account-base
     command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails server -b 0.0.0.0"
     ports:
       - "3001:3000"
-    environment:
-      DATABASE_URL: postgresql://credflow:credflow@postgres-account:5432/account_service_development
-      REDIS_URL: redis://redis:6379/0
-      RABBITMQ_URL: amqp://credflow:credflow@rabbitmq:5672
-      KYC_MOCK_URL: http://kyc-mock:4002
-      RAILS_ENV: development
-      RAILS_LOG_TO_STDOUT: "true"
-      SECRET_KEY_BASE: dev_secret_key_base_account_service_changeme
-      DEVISE_JWT_SECRET_KEY: dev_jwt_secret_key_changeme_in_production
-      INTERNAL_SERVICE_KEY: credflow-internal
-    depends_on:
-      postgres-account:
-        condition: service_healthy
-      redis:
-        condition: service_healthy
-      rabbitmq:
-        condition: service_healthy
-    volumes:
-      - ./services/account-service:/app
-      - bundle-account:/usr/local/bundle
 
   payment-service:
-    build:
-      context: services/payment-service
+    <<: *payment-base
     command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails server -b 0.0.0.0"
     ports:
       - "3002:3000"
-    environment:
-      DATABASE_URL: postgresql://credflow:credflow@postgres-payment:5432/payment_service_development
-      REDIS_URL: redis://redis:6379/1
-      RABBITMQ_URL: amqp://credflow:credflow@rabbitmq:5672
-      SPB_MOCK_URL: http://spb-mock:4001
-      ACCOUNT_SERVICE_URL: http://account-service:3000
-      DEVISE_JWT_SECRET_KEY: dev_jwt_secret_key_changeme_in_production
-      INTERNAL_SERVICE_KEY: credflow-internal
-      RAILS_ENV: development
-      RAILS_LOG_TO_STDOUT: "true"
-      SECRET_KEY_BASE: dev_secret_key_base_payment_service_changeme
-    depends_on:
-      postgres-payment:
-        condition: service_healthy
-      redis:
-        condition: service_healthy
-      rabbitmq:
-        condition: service_healthy
-    volumes:
-      - ./services/payment-service:/app
-      - bundle-payment:/usr/local/bundle
 
   receivables-service:
-    build:
-      context: services/receivables-service
+    <<: *receivables-base
     command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails server -b 0.0.0.0"
     ports:
       - "3003:3000"
-    environment:
-      DATABASE_URL: postgresql://credflow:credflow@postgres-receivables:5432/receivables_service_development
-      REDIS_URL: redis://redis:6379/2
-      RABBITMQ_URL: amqp://credflow:credflow@rabbitmq:5672
-      RABBITMQ_MANAGEMENT_URL: http://rabbitmq:15672
-      RABBITMQ_MANAGEMENT_USER: credflow
-      RABBITMQ_MANAGEMENT_PASS: credflow
-      SPB_MOCK_URL: http://spb-mock:4001
-      BOLETO_MOCK_URL: http://boleto-mock:4003
-      ACCOUNT_SERVICE_URL: http://account-service:3000
-      RAILS_ENV: development
-      RAILS_LOG_TO_STDOUT: "true"
-      SECRET_KEY_BASE: dev_secret_key_base_receivables_service_changeme
-      DEVISE_JWT_SECRET_KEY: dev_jwt_secret_key_changeme_in_production
-      INTERNAL_SERVICE_KEY: credflow-internal
-    depends_on:
-      postgres-receivables:
-        condition: service_healthy
-      redis:
-        condition: service_healthy
-      rabbitmq:
-        condition: service_healthy
-    volumes:
-      - ./services/receivables-service:/app
-      - bundle-receivables:/usr/local/bundle
+
+  # ── Serviços Rails — Jobs (Solid Queue) ──────────────────────────────────────
+
+  payment-jobs:
+    <<: *payment-base
+    command: bundle exec rails solid_queue:start
+
+  receivables-jobs:
+    <<: *receivables-base
+    command: bundle exec rails solid_queue:start
+
+  # ── Serviços Rails — Consumers (RabbitMQ / Sneakers) ─────────────────────────
+
+  account-consumer:
+    <<: *account-base
+    command: bundle exec sneakers work PaymentSettledConsumer PaymentFailedConsumer PaymentFailedNotificationConsumer ApprovalRequestedConsumer
+
+  receivables-consumer:
+    <<: *receivables-base
+    command: bundle exec sneakers work PaymentSettledConsumer
 
   # ── Frontend ────────────────────────────────────────────────────────────────
 

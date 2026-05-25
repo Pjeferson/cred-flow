@@ -425,6 +425,10 @@ Ver filas e routing keys em `@docs/rabbitmq.md`
 - [x] **TASK-53**: Testes Playwright (E2E) contra o Docker Compose — configurar `playwright.config.ts` apontando para `http://localhost:5173`; cobrir os 3 fluxos críticos: (1) login → dashboard, (2) criar payment order → aparece em pending, (3) aprovar ordem → status muda para settled
 - [x] **TASK-54**: Banco de test isolado para E2E — `docker-compose.e2e.yml` com `RAILS_ENV=test`; endpoints `POST /internal/e2e/seed` em account-service e payment-service; `globalSetup` do Playwright semeia dados controlados antes de cada suíte; 6/6 testes passando sem tocar banco de dev
 
+### Fase 12 — Infraestrutura de processos background
+
+- [x] **TASK-55**: Workers e consumers separados no Docker Compose — YAML anchors (`x-account-base`, `x-payment-base`, `x-receivables-base`) eliminam repetição; `payment-jobs` (Solid Queue), `receivables-jobs` (Solid Queue), `account-consumer` (Sneakers), `receivables-consumer` (Sneakers) como serviços independentes dos servidores Rails
+
 ### Backlog Enterprise — funcionalidades para ambiente produtivo
 
 > Tasks sem numeração sequencial — representam evoluções arquiteturais além do escopo de portfólio. Implementar apenas quando o contexto exigir.
