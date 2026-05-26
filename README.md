@@ -8,7 +8,7 @@ O projeto simula o back-office de uma plataforma de crédito: credores (FIDCs, s
 
 ## Demonstração em vídeo
 
-> **Em breve** — gravarei um walkthrough explicando as decisões de arquitetura e percorrendo os fluxos principais no ambiente local.
+[![Demonstração em vídeo](https://img.youtube.com/vi/Hjy_7py_ByY/maxresdefault.jpg)](https://youtu.be/Hjy_7py_ByY)
 
 ---
 
