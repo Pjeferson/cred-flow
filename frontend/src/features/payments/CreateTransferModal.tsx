@@ -16,6 +16,16 @@ interface Form {
 
 const EMPTY: Form = { amount: "", beneficiary_doc: "", beneficiary_name: "" };
 
+const REJECTION_MESSAGES: Record<string, string> = {
+  daily_limit_exceeded: "Limite diário atingido. O valor solicitado ultrapassa o limite configurado para esta conta.",
+  insufficient_balance: "Saldo insuficiente. Verifique o saldo disponível antes de tentar novamente.",
+};
+
+function rejectionMessage(reason: string | null): string {
+  if (!reason) return "Pedido rejeitado pelo motor de aprovação.";
+  return REJECTION_MESSAGES[reason] ?? `Pedido rejeitado: ${reason}.`;
+}
+
 export function CreateTransferModal({ accountId, onClose }: Props) {
   const user = useAuthStore((s) => s.user);
   const mutation = useCreatePaymentOrder();
@@ -33,13 +43,20 @@ export function CreateTransferModal({ accountId, onClose }: Props) {
     }
 
     try {
-      await mutation.mutateAsync({
+      const result = await mutation.mutateAsync({
         account_id: accountId,
         requested_by: user?.id ?? "",
         amount_cents,
         beneficiary_doc: form.beneficiary_doc,
         beneficiary_name: form.beneficiary_name || undefined,
       });
+
+      const order = result.data.attributes;
+      if (order.status === "rejected") {
+        setError(rejectionMessage(order.rejection_reason));
+        return;
+      }
+
       onClose();
     } catch {
       setError("Erro ao criar pedido. Verifique os dados e tente novamente.");

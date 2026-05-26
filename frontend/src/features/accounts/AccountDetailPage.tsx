@@ -58,6 +58,17 @@ const entryConfig: Record<
   },
 };
 
+function PolicyItem({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="flex flex-col gap-0.5">
+      <span className="text-[10px] font-medium uppercase tracking-wider text-[#9CA3AF]">
+        {label}
+      </span>
+      <span className="text-[13px] text-[#111827]">{value}</span>
+    </div>
+  );
+}
+
 function LedgerItem({ entry }: { entry: LedgerEntry }) {
   const cfg = entryConfig[entry.type] ?? entryConfig.DEBIT_EXECUTED;
   const label =
@@ -217,6 +228,51 @@ export function AccountDetailPage({ accountId }: { accountId: string }) {
                 ? `${activeCcb.installment_count} parcelas · ${pendingInstallments.length} pendentes`
                 : "Nenhuma CCB ativa"}
             </p>
+          </div>
+        </div>
+
+        {/* Policy rules */}
+        <div className="bg-white border border-[#E5E7EB] rounded-xl px-5 py-4">
+          <p className="text-[11px] font-medium uppercase tracking-wider text-[#9CA3AF] mb-3">
+            Política de pagamento
+          </p>
+          <div className="flex flex-wrap gap-x-8 gap-y-2">
+            <PolicyItem
+              label="Limite p/ aprovação"
+              value={
+                account.policy_rules?.approval_required_above_cents != null
+                  ? formatCurrency(account.policy_rules.approval_required_above_cents)
+                  : "—"
+              }
+            />
+            <PolicyItem
+              label="Limite diário"
+              value={
+                account.policy_rules?.daily_limit_cents != null
+                  ? formatCurrency(account.policy_rules.daily_limit_cents)
+                  : "—"
+              }
+            />
+            <PolicyItem
+              label="Quorum"
+              value={
+                account.policy_rules?.approval_threshold
+                  ? `${account.policy_rules.approval_threshold.required} de ${account.policy_rules.approval_threshold.of} aprovadores`
+                  : "—"
+              }
+            />
+            <PolicyItem
+              label="Beneficiário novo"
+              value={account.policy_rules?.new_beneficiary_requires_approval ? "exige aprovação" : "liberado"}
+            />
+            <PolicyItem
+              label="Horário bancário"
+              value={
+                account.policy_rules?.blocked_hours
+                  ? `bloqueado das ${account.policy_rules.blocked_hours.start} às ${account.policy_rules.blocked_hours.end}`
+                  : "sem restrição"
+              }
+            />
           </div>
         </div>
 

@@ -46,7 +46,7 @@ class PaymentOrder < ApplicationRecord
     end
 
     event :reject do
-      transitions from: :pending_approval, to: :rejected
+      transitions from: %i[policy_check pending_approval], to: :rejected
     end
 
     event :expire do
