@@ -1,0 +1,118 @@
+<svg width="960" height="615" viewBox="0 0 960 615" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif">
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#94a3b8"/>
+    </marker>
+    <marker id="arr-rb" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#ea580c"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="960" height="615" fill="#f1f5f9" rx="0"/>
+
+  <!-- TITLE -->
+  <text x="480" y="30" text-anchor="middle" font-size="17" font-weight="700" fill="#0f172a">Arquitetura — CredFlow</text>
+
+  <!-- ── FRONTEND ── -->
+  <rect x="270" y="45" width="420" height="58" rx="10" fill="#1d4ed8" stroke="#1e40af" stroke-width="1.5"/>
+  <text x="480" y="69" text-anchor="middle" font-size="13" font-weight="600" fill="white">Frontend</text>
+  <text x="480" y="88" text-anchor="middle" font-size="10.5" fill="#bfdbfe">React 19 + Vite 6  ·  TanStack Query + Router  ·  shadcn/ui  ·  :5173</text>
+
+  <!-- Arrow: Frontend → Gateway -->
+  <line x1="480" y1="103" x2="480" y2="132" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- ── API GATEWAY ── -->
+  <rect x="300" y="132" width="360" height="52" rx="10" fill="#92400e" stroke="#78350f" stroke-width="1.5"/>
+  <text x="480" y="155" text-anchor="middle" font-size="13" font-weight="600" fill="white">API Gateway — Nginx</text>
+  <text x="480" y="173" text-anchor="middle" font-size="10.5" fill="#fef3c7">roteia tráfego por prefixo de path  ·  :8080</text>
+
+  <!-- Arrows: Gateway → 3 Services -->
+  <path d="M 355 184 L 160 226" stroke="#94a3b8" stroke-width="1.5" fill="none" marker-end="url(#arr)"/>
+  <line x1="480" y1="184" x2="480" y2="226" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arr)"/>
+  <path d="M 605 184 L 800 226" stroke="#94a3b8" stroke-width="1.5" fill="none" marker-end="url(#arr)"/>
+
+  <!-- ══════════ 3 SERVICES ══════════ -->
+
+  <!-- account-service  x=30, w=260, center=160 -->
+  <rect x="30" y="226" width="260" height="162" rx="10" fill="#064e3b" stroke="#065f46" stroke-width="1.5"/>
+  <rect x="30" y="226" width="260" height="34" rx="10" fill="#065f46"/>
+  <rect x="30" y="248" width="260" height="12" fill="#065f46"/>
+  <text x="160" y="248" text-anchor="middle" font-size="12" font-weight="600" fill="white">account-service  :3001</text>
+  <text x="160" y="274" text-anchor="middle" font-size="10" fill="#a7f3d0">Participants + KYC  (kyc-mock :4002)</text>
+  <text x="160" y="291" text-anchor="middle" font-size="10" fill="#a7f3d0">Accounts  (policy_rules JSONB)</text>
+  <text x="160" y="308" text-anchor="middle" font-size="10" fill="#a7f3d0">LedgerEntries  (append-only, dupla entrada)</text>
+  <text x="160" y="325" text-anchor="middle" font-size="10" fill="#a7f3d0">Auth: Devise + devise-jwt</text>
+  <line x1="45" y1="337" x2="275" y2="337" stroke="#065f46" stroke-width="1"/>
+  <text x="160" y="355" text-anchor="middle" font-size="9.5" fill="#6ee7b7">postgres-account  :5432</text>
+  <text x="160" y="373" text-anchor="middle" font-size="9.5" fill="#6ee7b7">consumer: payment.settled · payment.failed</text>
+
+  <!-- payment-service  x=350, w=260, center=480 -->
+  <rect x="350" y="226" width="260" height="162" rx="10" fill="#2e1065" stroke="#4c1d95" stroke-width="1.5"/>
+  <rect x="350" y="226" width="260" height="34" rx="10" fill="#4c1d95"/>
+  <rect x="350" y="248" width="260" height="12" fill="#4c1d95"/>
+  <text x="480" y="248" text-anchor="middle" font-size="12" font-weight="600" fill="white">payment-service  :3002</text>
+  <text x="480" y="274" text-anchor="middle" font-size="10" fill="#ddd6fe">PaymentOrders  (AASM — 9 estados)</text>
+  <text x="480" y="291" text-anchor="middle" font-size="10" fill="#ddd6fe">Approvals  (quorum N de M, imutável)</text>
+  <text x="480" y="308" text-anchor="middle" font-size="10" fill="#ddd6fe">Policy Engine  (avalia policy_rules)</text>
+  <text x="480" y="325" text-anchor="middle" font-size="10" fill="#ddd6fe">Idempotência Redis  ·  spb-mock :4001</text>
+  <line x1="365" y1="337" x2="595" y2="337" stroke="#4c1d95" stroke-width="1"/>
+  <text x="480" y="355" text-anchor="middle" font-size="9.5" fill="#c4b5fd">postgres-payment  :5433</text>
+  <text x="480" y="373" text-anchor="middle" font-size="9.5" fill="#c4b5fd">publisher: payment.settled · payment.failed</text>
+
+  <!-- receivables-service  x=670, w=260, center=800 -->
+  <rect x="670" y="226" width="260" height="162" rx="10" fill="#450a0a" stroke="#7f1d1d" stroke-width="1.5"/>
+  <rect x="670" y="226" width="260" height="34" rx="10" fill="#7f1d1d"/>
+  <rect x="670" y="248" width="260" height="12" fill="#7f1d1d"/>
+  <text x="800" y="248" text-anchor="middle" font-size="12" font-weight="600" fill="white">receivables-service  :3003</text>
+  <text x="800" y="274" text-anchor="middle" font-size="10" fill="#fecaca">CCBs  +  Installments</text>
+  <text x="800" y="291" text-anchor="middle" font-size="10" fill="#fecaca">ReconciliationRuns</text>
+  <text x="800" y="308" text-anchor="middle" font-size="10" fill="#fecaca">OverdueDetectionJob  (01:00 diário)</text>
+  <text x="800" y="325" text-anchor="middle" font-size="10" fill="#fecaca">ReconciliationJob  (02:00 diário)</text>
+  <line x1="685" y1="337" x2="915" y2="337" stroke="#7f1d1d" stroke-width="1"/>
+  <text x="800" y="355" text-anchor="middle" font-size="9.5" fill="#fca5a5">postgres-receivables  :5434</text>
+  <text x="800" y="373" text-anchor="middle" font-size="9.5" fill="#fca5a5">consumer: payment.settled (reconcilia parcelas)</text>
+
+  <!-- Arrows: services → RabbitMQ -->
+  <line x1="160" y1="388" x2="160" y2="428" stroke="#ea580c" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arr-rb)"/>
+  <line x1="480" y1="388" x2="480" y2="428" stroke="#ea580c" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arr-rb)"/>
+  <line x1="800" y1="388" x2="800" y2="428" stroke="#ea580c" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arr-rb)"/>
+
+  <!-- ── RABBITMQ ── -->
+  <rect x="80" y="428" width="800" height="65" rx="10" fill="#c2410c" stroke="#9a3412" stroke-width="1.5"/>
+  <text x="480" y="451" text-anchor="middle" font-size="13" font-weight="600" fill="white">RabbitMQ  :5672  (AMQP)  ·  UI: :15672</text>
+  <text x="480" y="469" text-anchor="middle" font-size="10" fill="#fed7aa">exchange: credflow.events (topic)  ·  dead-letter: credflow.dlx  ·  retry exponencial por fila</text>
+  <text x="480" y="486" text-anchor="middle" font-size="10" fill="#fed7aa">eventos: payment.settled  ·  payment.failed  ·  approval.requested  ·  installment.overdue  ·  reconciliation.divergence_found</text>
+
+  <!-- Label for bottom row -->
+  <text x="480" y="518" text-anchor="middle" font-size="10" fill="#64748b" font-style="italic">serviços externos simulados localmente com Sinatra</text>
+
+  <!-- ── BOTTOM ROW: mocks + mailhog ── -->
+  <!-- 4 boxes, w=210, gap=20, total=4*210+3*20=900, margin=30 each side -->
+
+  <!-- spb-mock -->
+  <rect x="30" y="527" width="210" height="50" rx="8" fill="#334155" stroke="#475569" stroke-width="1.5"/>
+  <text x="135" y="548" text-anchor="middle" font-size="11" font-weight="600" fill="white">spb-mock  :4001</text>
+  <text x="135" y="566" text-anchor="middle" font-size="9.5" fill="#94a3b8">Sistema de Pagamentos Brasileiro</text>
+
+  <!-- kyc-mock -->
+  <rect x="260" y="527" width="210" height="50" rx="8" fill="#334155" stroke="#475569" stroke-width="1.5"/>
+  <text x="365" y="548" text-anchor="middle" font-size="11" font-weight="600" fill="white">kyc-mock  :4002</text>
+  <text x="365" y="566" text-anchor="middle" font-size="9.5" fill="#94a3b8">Validação de CPF / CNPJ</text>
+
+  <!-- boleto-mock -->
+  <rect x="490" y="527" width="210" height="50" rx="8" fill="#334155" stroke="#475569" stroke-width="1.5"/>
+  <text x="595" y="548" text-anchor="middle" font-size="11" font-weight="600" fill="white">boleto-mock  :4003</text>
+  <text x="595" y="566" text-anchor="middle" font-size="9.5" fill="#94a3b8">Emissão de boletos bancários</text>
+
+  <!-- mailhog -->
+  <rect x="720" y="527" width="210" height="50" rx="8" fill="#334155" stroke="#475569" stroke-width="1.5"/>
+  <text x="825" y="548" text-anchor="middle" font-size="11" font-weight="600" fill="white">Mailhog  :8025</text>
+  <text x="825" y="566" text-anchor="middle" font-size="9.5" fill="#94a3b8">SMTP — captura de e-mails</text>
+
+  <!-- Legend -->
+  <line x1="30" y1="600" x2="60" y2="600" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="65" y="604" font-size="9.5" fill="#64748b">HTTP síncrono</text>
+  <line x1="190" y1="600" x2="220" y2="600" stroke="#ea580c" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arr-rb)"/>
+  <text x="225" y="604" font-size="9.5" fill="#64748b">AMQP assíncrono (RabbitMQ)</text>
+</svg>
