@@ -8,6 +8,10 @@ O projeto simula o back-office de uma plataforma de crédito: credores (FIDCs, s
 
 ## Demonstração em vídeo
 
+![Walkthrough](assets/walkthrough.gif)
+
+▶ Walkthrough completo no YouTube — clique na thumbnail abaixo para assistir:
+
 [![Demonstração em vídeo](https://img.youtube.com/vi/Hjy_7py_ByY/maxresdefault.jpg)](https://youtu.be/Hjy_7py_ByY)
 
 ---
